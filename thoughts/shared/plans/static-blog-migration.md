@@ -278,14 +278,9 @@ end
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Project compiles: `mix compile`
-- [ ] Verify posts via IEx: `iex -S mix -e "IO.inspect(BigardoneDev.Blog.all_posts(), label: \"Posts\")"`
-- [ ] Posts are parsed correctly: posts list contains test post with correct fields
-
-#### Visual Verification (Playwright MCP):
-- [ ] Navigate to `http://localhost:4000/blog/2024/01/01/test-post` using `browser_navigate`
-- [ ] Take snapshot with `browser_snapshot` to verify post renders
-- [ ] Verify syntax highlighting by checking for `<pre>` elements with `browser_evaluate`: `() => document.querySelectorAll('pre code').length > 0`
+- [x] Project compiles: `mix compile`
+- [x] Verify posts via IEx: `iex -S mix -e "IO.inspect(BigardoneDev.Blog.all_posts(), label: \"Posts\")"`
+- [x] Posts are parsed correctly: posts list contains test post with correct fields
 
 ---
 

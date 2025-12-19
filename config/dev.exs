@@ -51,7 +51,9 @@ config :bigardone_dev, BigardoneDevWeb.Endpoint,
       ~r"priv/static/(?!uploads/).*\.(js|css|png|jpeg|jpg|gif|svg)$"E,
       # Router, Controllers, LiveViews and LiveComponents
       ~r"lib/bigardone_dev_web/router\.ex$"E,
-      ~r"lib/bigardone_dev_web/(controllers|live|components)/.*\.(ex|heex)$"E
+      ~r"lib/bigardone_dev_web/(controllers|live|components)/.*\.(ex|heex)$"E,
+      # Markdown posts for hot reload
+      ~r"priv/posts/.*\.(md)$"E
     ]
   ]
 
