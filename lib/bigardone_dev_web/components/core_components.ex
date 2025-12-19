@@ -8,12 +8,8 @@ defmodule BigardoneDevWeb.CoreComponents do
   with doc strings and declarative assigns. You may customize and style
   them in any way you want, based on your application growth and needs.
 
-  The foundation for styling is Tailwind CSS, a utility-first CSS framework,
-  augmented with daisyUI, a Tailwind CSS plugin that provides UI components
-  and themes. Here are useful references:
-
-    * [daisyUI](https://daisyui.com/docs/intro/) - a good place to get
-      started and see the available components.
+  The foundation for styling is Tailwind CSS, a utility-first CSS framework.
+  Here are useful references:
 
     * [Tailwind CSS](https://tailwindcss.com) - the foundational framework
       we build on. You will use it for layout, sizing, flexbox, grid, and
@@ -56,22 +52,29 @@ defmodule BigardoneDevWeb.CoreComponents do
       id={@id}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       role="alert"
-      class="toast toast-top toast-end z-50"
+      class="fixed top-4 right-4 z-50"
       {@rest}
     >
       <div class={[
-        "alert max-w-80 text-wrap w-80 sm:max-w-96 sm:w-96",
-        @kind == :info && "alert-info",
-        @kind == :error && "alert-error"
+        "max-w-80 flex w-80 items-center gap-3 rounded-lg px-4 py-3 shadow-lg sm:max-w-96 sm:w-96",
+        @kind == :info && "border border-blue-200 bg-blue-50 text-blue-800",
+        @kind == :error && "border border-red-200 bg-red-50 text-red-800"
       ]}>
-        <.icon :if={@kind == :info} name="hero-information-circle" class="size-5 shrink-0" />
-        <.icon :if={@kind == :error} name="hero-exclamation-circle" class="size-5 shrink-0" />
-        <div>
+        <.icon
+          :if={@kind == :info}
+          name="hero-information-circle"
+          class="size-5 shrink-0 text-blue-500"
+        />
+        <.icon
+          :if={@kind == :error}
+          name="hero-exclamation-circle"
+          class="size-5 shrink-0 text-red-500"
+        />
+        <div class="flex-1">
           <p :if={@title} class="font-semibold">{@title}</p>
           <p>{msg}</p>
         </div>
-        <div class="flex-1" />
-        <button type="button" class="group cursor-pointer self-start" aria-label="close">
+        <button type="button" class="group cursor-pointer" aria-label="close">
           <.icon name="hero-x-mark" class="size-5 opacity-40 group-hover:opacity-70" />
         </button>
       </div>
@@ -94,11 +97,17 @@ defmodule BigardoneDevWeb.CoreComponents do
   slot :inner_block, required: true
 
   def button(%{rest: rest} = assigns) do
-    variants = %{"primary" => "btn-primary", nil => "btn-primary btn-soft"}
+    variants = %{
+      "primary" => "bg-zinc-900 text-white hover:bg-zinc-700",
+      nil => "bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
+    }
 
     assigns =
       assign_new(assigns, :class, fn ->
-        ["btn", Map.fetch!(variants, assigns[:variant])]
+        [
+          "inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold transition-colors",
+          Map.fetch!(variants, assigns[:variant])
+        ]
       end)
 
     if rest[:href] || rest[:navigate] || rest[:patch] do
@@ -203,8 +212,8 @@ defmodule BigardoneDevWeb.CoreComponents do
       end)
 
     ~H"""
-    <div class="fieldset mb-2">
-      <label>
+    <div class="mb-2">
+      <label class="flex cursor-pointer items-center gap-2">
         <input
           type="hidden"
           name={@name}
@@ -212,17 +221,16 @@ defmodule BigardoneDevWeb.CoreComponents do
           disabled={@rest[:disabled]}
           form={@rest[:form]}
         />
-        <span class="label">
-          <input
-            type="checkbox"
-            id={@id}
-            name={@name}
-            value="true"
-            checked={@checked}
-            class={@class || "checkbox checkbox-sm"}
-            {@rest}
-          />{@label}
-        </span>
+        <input
+          type="checkbox"
+          id={@id}
+          name={@name}
+          value="true"
+          checked={@checked}
+          class={@class || "size-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-500"}
+          {@rest}
+        />
+        <span class="text-sm text-zinc-700">{@label}</span>
       </label>
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
@@ -231,13 +239,17 @@ defmodule BigardoneDevWeb.CoreComponents do
 
   def input(%{type: "select"} = assigns) do
     ~H"""
-    <div class="fieldset mb-2">
+    <div class="mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="mb-1 block text-sm font-medium text-zinc-700">{@label}</span>
         <select
           id={@id}
           name={@name}
-          class={[@class || "select w-full", @errors != [] && (@error_class || "select-error")]}
+          class={[
+            @class ||
+              "block w-full rounded-lg border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-zinc-500 focus:ring-zinc-500",
+            @errors != [] && (@error_class || "border-red-500")
+          ]}
           multiple={@multiple}
           {@rest}
         >
@@ -252,13 +264,17 @@ defmodule BigardoneDevWeb.CoreComponents do
 
   def input(%{type: "textarea"} = assigns) do
     ~H"""
-    <div class="fieldset mb-2">
+    <div class="mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="mb-1 block text-sm font-medium text-zinc-700">{@label}</span>
         <textarea
           id={@id}
           name={@name}
-          class={[@class || "textarea w-full", @errors != [] && (@error_class || "textarea-error")]}
+          class={[
+            @class ||
+              "block w-full rounded-lg border-zinc-300 px-3 py-2 text-sm shadow-sm focus:border-zinc-500 focus:ring-zinc-500",
+            @errors != [] && (@error_class || "border-red-500")
+          ]}
           {@rest}
         >{Phoenix.HTML.Form.normalize_value("textarea", @value)}</textarea>
       </label>
@@ -270,15 +286,19 @@ defmodule BigardoneDevWeb.CoreComponents do
   # All other inputs text, datetime-local, url, password, etc. are handled here...
   def input(assigns) do
     ~H"""
-    <div class="fieldset mb-2">
+    <div class="mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="mb-1 block text-sm font-medium text-zinc-700">{@label}</span>
         <input
           type={@type}
           name={@name}
           id={@id}
           value={Phoenix.HTML.Form.normalize_value(@type, @value)}
-          class={[@class || "input w-full", @errors != [] && (@error_class || "input-error")]}
+          class={[
+            @class ||
+              "block w-full rounded-lg border-zinc-300 px-3 py-2 text-sm shadow-sm focus:border-zinc-500 focus:ring-zinc-500",
+            @errors != [] && (@error_class || "border-red-500")
+          ]}
           {@rest}
         />
       </label>
@@ -290,7 +310,7 @@ defmodule BigardoneDevWeb.CoreComponents do
   # Helper used by inputs to generate form errors
   defp error(assigns) do
     ~H"""
-    <p class="text-error mt-1.5 flex items-center gap-2 text-sm">
+    <p class="mt-1.5 flex items-center gap-2 text-sm text-red-600">
       <.icon name="hero-exclamation-circle" class="size-5" />
       {render_slot(@inner_block)}
     </p>
@@ -308,10 +328,10 @@ defmodule BigardoneDevWeb.CoreComponents do
     ~H"""
     <header class={[@actions != [] && "flex items-center justify-between gap-6", "pb-4"]}>
       <div>
-        <h1 class="text-lg font-semibold leading-8">
+        <h1 class="text-lg font-semibold leading-8 text-zinc-900">
           {render_slot(@inner_block)}
         </h1>
-        <p :if={@subtitle != []} class="text-base-content/70 text-sm">
+        <p :if={@subtitle != []} class="text-sm text-zinc-600">
           {render_slot(@subtitle)}
         </p>
       </div>
@@ -352,25 +372,29 @@ defmodule BigardoneDevWeb.CoreComponents do
       end
 
     ~H"""
-    <table class="table-zebra table">
-      <thead>
+    <table class="w-full text-left text-sm">
+      <thead class="border-b border-zinc-200 text-zinc-500">
         <tr>
-          <th :for={col <- @col}>{col[:label]}</th>
-          <th :if={@action != []}>
+          <th :for={col <- @col} class="px-4 py-3 font-medium">{col[:label]}</th>
+          <th :if={@action != []} class="px-4 py-3">
             <span class="sr-only">Actions</span>
           </th>
         </tr>
       </thead>
-      <tbody id={@id} phx-update={is_struct(@rows, Phoenix.LiveView.LiveStream) && "stream"}>
-        <tr :for={row <- @rows} id={@row_id && @row_id.(row)}>
+      <tbody
+        id={@id}
+        phx-update={is_struct(@rows, Phoenix.LiveView.LiveStream) && "stream"}
+        class="divide-y divide-zinc-100"
+      >
+        <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="hover:bg-zinc-50">
           <td
             :for={col <- @col}
             phx-click={@row_click && @row_click.(row)}
-            class={@row_click && "hover:cursor-pointer"}
+            class={["px-4 py-3", @row_click && "hover:cursor-pointer"]}
           >
             {render_slot(col, @row_item.(row))}
           </td>
-          <td :if={@action != []} class="w-0 font-semibold">
+          <td :if={@action != []} class="w-0 px-4 py-3 font-semibold">
             <div class="flex gap-4">
               <%= for action <- @action do %>
                 {render_slot(action, @row_item.(row))}
@@ -399,11 +423,11 @@ defmodule BigardoneDevWeb.CoreComponents do
 
   def list(assigns) do
     ~H"""
-    <ul class="list">
-      <li :for={item <- @item} class="list-row">
-        <div class="list-col-grow">
-          <div class="font-bold">{item.title}</div>
-          <div>{render_slot(item)}</div>
+    <ul class="divide-y divide-zinc-100">
+      <li :for={item <- @item} class="flex py-3">
+        <div class="flex-1">
+          <div class="font-bold text-zinc-900">{item.title}</div>
+          <div class="text-zinc-600">{render_slot(item)}</div>
         </div>
       </li>
     </ul>

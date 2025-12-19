@@ -23,7 +23,7 @@ mix precommit                # Compile (warnings as errors) + check deps + forma
 
 ## Architecture Overview
 
-This is a Phoenix 1.8 application with LiveView, Tailwind CSS v4, and daisyUI.
+This is a Phoenix 1.8 application with LiveView and Tailwind CSS v4.
 
 ### Module Structure
 
@@ -44,7 +44,6 @@ This is a Phoenix 1.8 application with LiveView, Tailwind CSS v4, and daisyUI.
 ### Asset Pipeline
 
 - **Tailwind v4** - No config file; uses `@import "tailwindcss"` syntax in `assets/css/app.css`
-- **daisyUI** - Pre-built components via plugin
 - **Heroicons** - Use `<.icon name="hero-x-mark" />` from CoreComponents
 - **No inline scripts** - All JS must go through `assets/js/app.js`
 

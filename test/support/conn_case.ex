@@ -20,6 +20,7 @@ defmodule BigardoneDevWeb.ConnCase do
   using do
     quote do
       use BigardoneDevWeb, :verified_routes
+
       import BigardoneDevWeb.ConnCase
       import Phoenix.ConnTest
       import Plug.Conn
