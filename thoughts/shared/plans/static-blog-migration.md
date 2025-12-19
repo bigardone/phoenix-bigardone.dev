@@ -516,7 +516,7 @@ defmodule BigardoneDevWeb.BlogComponents do
   def post_card(assigns) do
     ~H"""
     <article class="p-8 bg-white rounded-lg cursor-pointer shadow-custom hover:shadow-custom-hover duration-300 transition-shadow">
-      <a href={@post.path}>
+      <.link navigate={@post.path}>
         <header class="mb-5">
           <h2 class="mb-6 text-xl font-black hover:underline hover:text-purple-900">
             {@post.title}
@@ -526,7 +526,7 @@ defmodule BigardoneDevWeb.BlogComponents do
         <div class="inline-block text-xs">
           <.post_meta date={@post.date} reading_time={@post.reading_time} tags={@post.tags} />
         </div>
-      </a>
+      </.link>
     </article>
     """
   end
@@ -613,10 +613,10 @@ import BigardoneDevWeb.BlogComponents
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Project compiles: `mix compile`
+- [x] Project compiles: `mix compile`
 
 #### Visual Verification (Playwright MCP):
-- [ ] Components will be verified in Phase 5 via browser testing
+- [x] Components will be verified in Phase 5 via browser testing
 
 ---
 

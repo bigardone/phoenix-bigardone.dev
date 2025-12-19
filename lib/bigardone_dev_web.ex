@@ -78,6 +78,7 @@ defmodule BigardoneDevWeb do
 
   defp html_helpers do
     quote do
+      import BigardoneDevWeb.BlogComponents
       import BigardoneDevWeb.CoreComponents
       # HTML escaping functionality
       import Phoenix.HTML
