@@ -470,17 +470,17 @@ end
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Project compiles: `mix compile`
-- [ ] Server starts: `mix phx.server`
+- [x] Project compiles: `mix compile`
+- [x] Server starts: `mix phx.server`
 
 #### Visual Verification (Playwright MCP):
-- [ ] Navigate to `http://localhost:4000` using `browser_navigate`
-- [ ] Take snapshot with `browser_snapshot` to capture full layout
-- [ ] Verify header logo exists: `browser_evaluate` with `() => document.querySelector('header img[alt="bigardone.dev"]') !== null`
-- [ ] Verify navigation links: `browser_snapshot` should show "Home" and "Articles" links
-- [ ] Verify footer with social links: `browser_evaluate` with `() => document.querySelectorAll('footer a[target="_blank"]').length === 3`
-- [ ] Navigate to `/blog` and take `browser_snapshot` to verify "Articles" nav link is highlighted
-- [ ] Verify SVG icons load: `browser_evaluate` with `() => document.querySelectorAll('img[src*=".svg"]').length > 0`
+- [x] Navigate to `http://localhost:4000` using `browser_navigate`
+- [x] Take snapshot with `browser_snapshot` to capture full layout
+- [x] Verify header logo exists: `browser_evaluate` with `() => document.querySelector('header img[alt="bigardone.dev"]') !== null`
+- [x] Verify navigation links: `browser_snapshot` should show "Home" and "Articles" links
+- [x] Verify footer with social links: `browser_evaluate` with `() => document.querySelectorAll('footer a[target="_blank"]').length === 3`
+- [x] Navigate to `/blog` and take `browser_snapshot` to verify "Articles" nav link is highlighted
+- [x] Verify SVG icons load: `browser_evaluate` with `() => document.querySelectorAll('img[src*=".svg"]').length > 0`
 
 ---
 

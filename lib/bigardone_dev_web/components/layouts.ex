@@ -1,86 +1,124 @@
 defmodule BigardoneDevWeb.Layouts do
   @moduledoc """
-  This module holds layouts and related functionality
-  used by your application.
+  Layout components for the bigardone.dev site.
   """
   use BigardoneDevWeb, :html
 
-  # Embed all files in layouts/* within this module.
-  # The default root.html.heex file contains the HTML
-  # skeleton of your application, namely HTML headers
-  # and other static content.
   embed_templates "layouts/*"
 
-  @doc """
-  Renders your app layout.
-
-  This function is typically invoked from every template,
-  and it often contains your application menu, sidebar,
-  or similar.
-
-  ## Examples
-
-      <Layouts.app flash={@flash}>
-        <h1>Content</h1>
-      </Layouts.app>
-
-  """
-  attr :flash, :map, required: true, doc: "the map of flash messages"
-
-  attr :current_scope, :map,
-    default: nil,
-    doc: "the current [scope](https://hexdocs.pm/phoenix/scopes.html)"
-
+  attr :flash, :map, required: true
+  attr :current_path, :string, default: "/"
   slot :inner_block, required: true
 
   def app(assigns) do
     ~H"""
-    <header class="flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-      <div class="flex-1">
-        <a href="/" class="flex w-fit items-center gap-2">
-          <img src={~p"/images/logo.svg"} width="36" />
-          <span class="text-sm font-semibold text-zinc-900">v{Application.spec(:phoenix, :vsn)}</span>
-        </a>
-      </div>
-      <nav>
-        <ul class="flex items-center gap-4">
-          <li>
-            <a
-              href="https://phoenixframework.org/"
-              class="text-sm font-medium text-zinc-600 hover:text-zinc-900"
-            >
-              Website
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/phoenixframework/phoenix"
-              class="text-sm font-medium text-zinc-600 hover:text-zinc-900"
-            >
-              GitHub
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://hexdocs.pm/phoenix/overview.html"
-              class="inline-flex items-center justify-center rounded-lg bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700"
-            >
-              Get Started <span aria-hidden="true" class="ml-1">&rarr;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </header>
-
-    <main class="px-4 py-20 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl space-y-4">
+    <div class="flex min-h-screen flex-col">
+      <.site_header current_path={@current_path} />
+      <main class="flex-1">
         {render_slot(@inner_block)}
-      </div>
-    </main>
-
+      </main>
+      <.wave_divider color="gray-50" />
+      <.footer />
+    </div>
     <.flash_group flash={@flash} />
     """
   end
+
+  attr :current_path, :string, default: "/"
+
+  def site_header(assigns) do
+    ~H"""
+    <header class="mx-auto w-full max-w-6xl px-4">
+      <div class="flex flex-row items-center justify-between py-6">
+        <div class="flex-1">
+          <a href="/">
+            <img src={~p"/images/logo.svg"} width="70" height="50" alt="bigardone.dev" />
+          </a>
+        </div>
+        <nav class="flex flex-1 flex-row">
+          <ul class="flex w-full flex-row justify-end gap-x-4 text-sm">
+            <li class="ml-6">
+              <.nav_link href="/" current_path={@current_path}>Home</.nav_link>
+            </li>
+            <li class="ml-6">
+              <.nav_link href="/blog" current_path={@current_path}>Articles</.nav_link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    """
+  end
+
+  attr :href, :string, required: true
+  attr :current_path, :string, required: true
+  slot :inner_block, required: true
+
+  defp nav_link(assigns) do
+    active? =
+      assigns.current_path == assigns.href or
+        (assigns.href == "/blog" and String.starts_with?(assigns.current_path, "/blog"))
+
+    assigns = assign(assigns, :active?, active?)
+
+    ~H"""
+    <a
+      href={@href}
+      class={[
+        "block font-black text-black transition-colors hover:text-purple-600",
+        @active? && "text-purple-900"
+      ]}
+    >
+      {render_slot(@inner_block)}
+    </a>
+    """
+  end
+
+  def footer(assigns) do
+    ~H"""
+    <footer class="bg-gray-50 pt-2 pb-6 text-gray-600 md:pt-0 md:pb-12">
+      <div class="mx-auto flex w-full max-w-6xl flex-row justify-between px-4 align-middle text-sm">
+        <div class="w-3/5 md:w-9/12">
+          bigardone.dev &copy; {DateTime.utc_now().year}
+        </div>
+        <div class="flex w-2/5 flex-row justify-end gap-x-10 md:w-2/12">
+          <a class="block flex-1 text-right" href="https://github.com/bigardone" target="_blank">
+            <img src={~p"/images/github.svg"} width="24" height="24" alt="GitHub" />
+          </a>
+          <a class="block flex-1 text-right" href="https://twitter.com/bigardone" target="_blank">
+            <img src={~p"/images/twitter.svg"} width="24" height="24" alt="Twitter" />
+          </a>
+          <a
+            class="block flex-1 text-right"
+            href="https://www.linkedin.com/in/ricardogarciavega/"
+            target="_blank"
+          >
+            <img src={~p"/images/linkedin.svg"} width="24" height="24" alt="LinkedIn" />
+          </a>
+        </div>
+      </div>
+    </footer>
+    """
+  end
+
+  attr :color, :string, default: "gray-50"
+  attr :flip, :boolean, default: false
+
+  def wave_divider(assigns) do
+    ~H"""
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class={@flip && "rotate-180"}>
+      <path
+        fill={wave_color(@color)}
+        fill-opacity="1"
+        d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+      />
+    </svg>
+    """
+  end
+
+  defp wave_color("gray-50"), do: "#F9FAFB"
+  defp wave_color("purple-50"), do: "#F5F3FF"
+  defp wave_color(_), do: "#F9FAFB"
 
   @doc """
   Shows the flash group with standard titles and content.
