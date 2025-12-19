@@ -31,9 +31,9 @@ defmodule BigardoneDevWeb.Layouts do
     <header class="mx-auto w-full max-w-6xl px-4">
       <div class="flex flex-row items-center justify-between py-6">
         <div class="flex-1">
-          <a href="/">
+          <.link navigate="/">
             <img src={~p"/images/logo.svg"} width="70" height="50" alt="bigardone.dev" />
-          </a>
+          </.link>
         </div>
         <nav class="flex flex-1 flex-row">
           <ul class="flex w-full flex-row justify-end gap-x-4 text-sm">
@@ -62,15 +62,15 @@ defmodule BigardoneDevWeb.Layouts do
     assigns = assign(assigns, :active?, active?)
 
     ~H"""
-    <a
-      href={@href}
+    <.link
+      navigate={@href}
       class={[
         "block font-black text-black transition-colors hover:text-purple-600",
         @active? && "text-purple-900"
       ]}
     >
       {render_slot(@inner_block)}
-    </a>
+    </.link>
     """
   end
 

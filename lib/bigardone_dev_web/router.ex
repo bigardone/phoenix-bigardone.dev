@@ -17,7 +17,9 @@ defmodule BigardoneDevWeb.Router do
   scope "/", BigardoneDevWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive
+    live "/blog", BlogLive
+    live "/blog/:year/:month/:day/:slug", PostLive
   end
 
   # Other scopes may use custom stacks.

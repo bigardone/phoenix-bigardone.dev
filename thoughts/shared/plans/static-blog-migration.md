@@ -364,9 +364,9 @@ defmodule BigardoneDevWeb.Layouts do
     <header class="w-full max-w-6xl px-4 mx-auto">
       <div class="flex flex-row items-center justify-between py-6">
         <div class="flex-1">
-          <a href="/">
+          <.link href="/">
             <img src={~p"/images/logo.svg"} width="70" height="50" alt="bigardone.dev" />
-          </a>
+          </.link>
         </div>
         <nav class="flex flex-row flex-1">
           <ul class="flex flex-row justify-end w-full text-sm gap-x-4">
@@ -394,15 +394,14 @@ defmodule BigardoneDevWeb.Layouts do
     assigns = assign(assigns, :active?, active?)
 
     ~H"""
-    <a
-      href={@href}
+    <.link navigate={@href}
       class={[
         "block font-black text-black hover:text-purple-600 transition-colors",
         @active? && "text-purple-900"
       ]}
     >
       {render_slot(@inner_block)}
-    </a>
+    </.link>
     """
   end
 
@@ -668,6 +667,8 @@ end
 **File**: `lib/bigardone_dev_web/live/home_live.ex`
 **Changes**: Homepage with hero, latest articles, and projects
 
+**IMPORTANT**: Each LiveView's render function must wrap content with `<Layouts.app flash={@flash} current_path={@current_path}>` to include the header and footer.
+
 ```elixir
 defmodule BigardoneDevWeb.HomeLive do
   use BigardoneDevWeb, :live_view
@@ -688,7 +689,8 @@ defmodule BigardoneDevWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="md:mt-32 mt-16">
+    <Layouts.app flash={@flash} current_path={@current_path}>
+      <div class="md:mt-32 mt-16">
       <%!-- Hero Section --%>
       <section class="md:grid md:grid-flow-row md:grid-cols-2 md:gap-4 w-full max-w-6xl px-4 mx-auto">
         <div class="md:mb-0 mb-6 text-xl leading-relaxed text-gray-700">
@@ -749,7 +751,8 @@ defmodule BigardoneDevWeb.HomeLive do
           <.project_card :for={project <- @projects} project={project} />
         </div>
       </section>
-    </div>
+      </div>
+    </Layouts.app>
     """
   end
 end
@@ -777,12 +780,14 @@ defmodule BigardoneDevWeb.BlogLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <section class="max-w-6xl px-4 py-12 mx-auto md:py-32">
-      <.section_heading text="Articles" />
-      <div class="grid grid-flow-row grid-cols-1 md:grid-cols-2 gap-8">
-        <.post_card :for={post <- @posts} post={post} />
-      </div>
-    </section>
+    <Layouts.app flash={@flash} current_path={@current_path}>
+      <section class="max-w-6xl px-4 py-12 mx-auto md:py-32">
+        <.section_heading text="Articles" />
+        <div class="grid grid-flow-row grid-cols-1 md:grid-cols-2 gap-8">
+          <.post_card :for={post <- @posts} post={post} />
+        </div>
+      </section>
+    </Layouts.app>
     """
   end
 end
@@ -821,16 +826,18 @@ defmodule BigardoneDevWeb.PostLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <section class="px-4 mx-auto mt-16 md:mt-32 prose md:prose-lg prose-purple max-w-none md:max-w-4xl">
-      <header class="mb-10">
-        <h1 class="mb-4 font-black">{@post.title}</h1>
-        <div class="mb-4 text-xl text-gray-500">{@post.excerpt}</div>
-        <.post_meta date={@post.date} reading_time={@post.reading_time} tags={@post.tags} />
-      </header>
-      <article class="mb-16">
-        {raw(@post.body)}
-      </article>
-    </section>
+    <Layouts.app flash={@flash} current_path={@current_path}>
+      <section class="px-4 mx-auto mt-16 md:mt-32 prose md:prose-lg prose-purple max-w-none md:max-w-4xl">
+        <header class="mb-10">
+          <h1 class="mb-4 font-black">{@post.title}</h1>
+          <div class="mb-4 text-xl text-gray-500">{@post.excerpt}</div>
+          <.post_meta date={@post.date} reading_time={@post.reading_time} tags={@post.tags} />
+        </header>
+        <article class="mb-16">
+          {raw(@post.body)}
+        </article>
+      </section>
+    </Layouts.app>
     """
   end
 end
@@ -896,39 +903,39 @@ cd assets && npm install @tailwindcss/typography
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Project compiles: `mix compile`
-- [ ] Server starts: `mix phx.server`
+- [x] Project compiles: `mix compile`
+- [x] Server starts: `mix phx.server`
 
 #### Visual Verification (Playwright MCP):
 
 **Homepage (`/`):**
-- [ ] Navigate to `http://localhost:4000` using `browser_navigate`
-- [ ] Take `browser_snapshot` to capture homepage
-- [ ] Verify hero section: `browser_evaluate` with `() => document.querySelector('h1').textContent.includes("software engineer")`
-- [ ] Verify avatar image: `browser_evaluate` with `() => document.querySelector('img[alt="Ricardo"]') !== null`
-- [ ] Verify "Latest articles" section heading exists in snapshot
-- [ ] Verify post cards: `browser_evaluate` with `() => document.querySelectorAll('article').length >= 6`
-- [ ] Verify "View more articles" link: `browser_evaluate` with `() => document.querySelector('a[href="/blog"]') !== null`
-- [ ] Verify "Recent projects" section and project cards in snapshot
-- [ ] Verify wave dividers: `browser_evaluate` with `() => document.querySelectorAll('svg path').length >= 2`
+- [x] Navigate to `http://localhost:4000` using `browser_navigate`
+- [x] Take `browser_snapshot` to capture homepage
+- [x] Verify hero section: `browser_evaluate` with `() => document.querySelector('h1').textContent.includes("software engineer")`
+- [x] Verify avatar image: `browser_evaluate` with `() => document.querySelector('img[alt="Ricardo"]') !== null`
+- [x] Verify "Latest articles" section heading exists in snapshot
+- [x] Verify post cards: `browser_evaluate` with `() => document.querySelectorAll('article').length >= 6`
+- [x] Verify "View more articles" link: `browser_evaluate` with `() => document.querySelector('a[href="/blog"]') !== null`
+- [x] Verify "Recent projects" section and project cards in snapshot
+- [x] Verify wave dividers: `browser_evaluate` with `() => document.querySelectorAll('svg path').length >= 2`
 
 **Blog listing (`/blog`):**
-- [ ] Navigate to `http://localhost:4000/blog` using `browser_navigate`
-- [ ] Take `browser_snapshot` to capture blog page
-- [ ] Verify "Articles" heading exists in snapshot
-- [ ] Verify post cards grid: `browser_evaluate` with `() => document.querySelectorAll('article').length > 0`
+- [x] Navigate to `http://localhost:4000/blog` using `browser_navigate`
+- [x] Take `browser_snapshot` to capture blog page
+- [x] Verify "Articles" heading exists in snapshot
+- [x] Verify post cards grid: `browser_evaluate` with `() => document.querySelectorAll('article').length > 0`
 
 **Post detail (click from listing):**
-- [ ] Use `browser_click` on first article link to navigate to a post
-- [ ] Take `browser_snapshot` to capture post page
-- [ ] Verify post title in `<h1>`: `browser_evaluate` with `() => document.querySelector('h1') !== null`
-- [ ] Verify post metadata (date, reading time): snapshot should show date and "min read"
-- [ ] Verify tags display: `browser_evaluate` with `() => document.querySelectorAll('.bg-gray-100').length > 0`
-- [ ] Verify article body renders: `browser_evaluate` with `() => document.querySelector('article').innerHTML.length > 100`
+- [x] Use `browser_click` on first article link to navigate to a post
+- [x] Take `browser_snapshot` to capture post page
+- [x] Verify post title in `<h1>`: `browser_evaluate` with `() => document.querySelector('h1') !== null`
+- [x] Verify post metadata (date, reading time): snapshot should show date and "min read"
+- [x] Verify tags display: `browser_evaluate` with `() => document.querySelectorAll('.bg-gray-100').length > 0`
+- [x] Verify article body renders: `browser_evaluate` with `() => document.querySelector('article').innerHTML.length > 100`
 
 **Navigation state:**
-- [ ] Navigate to `/` and take snapshot - "Home" should appear active (text-purple-900 class)
-- [ ] Navigate to `/blog` and take snapshot - "Articles" should appear active
+- [x] Navigate to `/` and take snapshot - "Home" should appear active (text-purple-900 class)
+- [x] Navigate to `/blog` and take snapshot - "Articles" should appear active
 
 ---
 
