@@ -104,7 +104,7 @@ Add NimblePublisher, YAML parser, and markdown processing dependencies. Configur
 ```css
 @theme {
   --color-purple-1000: #1c1648;
-  --font-family-sans: 'Montserrat', sans-serif;
+  --font-sans: 'Montserrat', sans-serif;
   --shadow-custom: 0px 8px 16px 0px rgb(0 0 0 / 3%);
   --shadow-custom-hover: 0px 8px 16px 0px rgb(0 0 0 / 6%);
 }
@@ -113,14 +113,14 @@ Add NimblePublisher, YAML parser, and markdown processing dependencies. Configur
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Dependencies install: `mix deps.get`
-- [ ] Project compiles: `mix compile`
-- [ ] Server starts: `mix phx.server`
+- [x] Dependencies install: `mix deps.get`
+- [x] Project compiles: `mix compile`
+- [x] Server starts: `mix phx.server`
 
 #### Visual Verification (Playwright MCP):
-- [ ] Navigate to `http://localhost:4000` using `browser_navigate`
-- [ ] Take snapshot with `browser_snapshot` to verify page loads
-- [ ] Use `browser_evaluate` to check font-family: `() => getComputedStyle(document.body).fontFamily` should include "Montserrat"
+- [x] Navigate to `http://localhost:4000` using `browser_navigate`
+- [x] Take snapshot with `browser_snapshot` to verify page loads
+- [x] Use `browser_evaluate` to check font-family: `() => getComputedStyle(document.body).fontFamily` should include "Montserrat"
 
 ---
 

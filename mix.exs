@@ -40,6 +40,12 @@ defmodule BigardoneDev.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:nimble_publisher, "~> 1.1"},
+      {:yaml_elixir, "~> 2.9"},
+      {:earmark, "~> 1.4"},
+      {:makeup, "~> 1.2"},
+      {:makeup_elixir, "~> 1.0"},
+      {:makeup_js, "~> 0.1"},
       {:tidewave, "~> 0.5", only: [:dev]},
       {:phoenix, "~> 1.8.3"},
       {:phoenix_html, "~> 4.1"},
