@@ -24,10 +24,10 @@ defmodule BigardoneDevWeb.HomeLive do
         <%!-- Hero Section --%>
         <section class="mx-auto w-full max-w-6xl px-4 md:grid md:grid-flow-row md:grid-cols-2 md:gap-4">
           <div class="mb-6 text-xl leading-relaxed text-gray-700 md:mb-0">
-            <p class="font-black">
+            <p class="font-bold">
               Hi, how are you doing? I'm Ricardo.
             </p>
-            <h1 class="text-purple-1000 my-8 text-4xl font-black">
+            <h1 class="text-purple-1000 my-8 text-4xl font-bold">
               I'm a software engineer.
             </h1>
             <p class="mb-6">
@@ -37,12 +37,12 @@ defmodule BigardoneDevWeb.HomeLive do
             </p>
             <p>
               Feel free to read any of my
-              <a href="#latest_articles" class="font-black text-purple-700 hover:underline">
+              <a href="#latest_articles" class="font-bold text-purple-700 hover:underline">
                 latest articles
               </a>
               or take a look at my <a
                 href="#recent_projects"
-                class="font-black text-purple-700 hover:underline"
+                class="font-bold text-purple-700 hover:underline"
               >
               recent projects</a>.
               I hope you enjoy them.
@@ -71,7 +71,7 @@ defmodule BigardoneDevWeb.HomeLive do
               <div>
                 <a
                   href="/blog"
-                  class="shadow-custom block rounded-lg bg-purple-200 p-8 text-center font-black text-purple-900 hover:shadow-custom-hover hover:underline"
+                  class="shadow-custom block rounded-lg bg-purple-200 p-8 text-center font-bold text-purple-900 hover:shadow-custom-hover hover:underline"
                 >
                   View more articles
                 </a>

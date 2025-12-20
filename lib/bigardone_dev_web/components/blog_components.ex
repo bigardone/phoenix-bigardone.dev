@@ -6,7 +6,7 @@ defmodule BigardoneDevWeb.BlogComponents do
 
   def section_heading(assigns) do
     ~H"""
-    <div class="text-purple-1000 mb-16 text-3xl font-black">
+    <div class="text-purple-1000 mb-16 text-3xl font-bold">
       <span class="inline-block py-6">
         {@text}
       </span>
@@ -25,7 +25,7 @@ defmodule BigardoneDevWeb.BlogComponents do
     >
       <.link navigate={@post.path}>
         <header class="mb-5">
-          <h2 class="mb-6 text-xl font-black hover:text-purple-900 hover:underline">
+          <h2 class="mb-6 text-xl font-bold hover:text-purple-900 hover:underline">
             {@post.title}
           </h2>
           <h3 class="text-base text-gray-500">{@post.excerpt}</h3>
@@ -81,7 +81,7 @@ defmodule BigardoneDevWeb.BlogComponents do
       <div class="p-8">
         <header class="mb-4">
           <a href={@project.project_url} target="_blank" rel="noopener noreferrer">
-            <h2 class="mb-1 text-xl font-black hover:text-purple-900 hover:underline">
+            <h2 class="mb-1 text-xl font-bold hover:text-purple-900 hover:underline">
               {@project.name}
             </h2>
           </a>

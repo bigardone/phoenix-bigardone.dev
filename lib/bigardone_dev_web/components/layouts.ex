@@ -65,7 +65,7 @@ defmodule BigardoneDevWeb.Layouts do
     <.link
       navigate={@href}
       class={[
-        "block font-black text-black transition-colors hover:text-purple-600",
+        "block font-bold text-black transition-colors hover:text-purple-600",
         @active? && "text-purple-900"
       ]}
     >
@@ -81,12 +81,9 @@ defmodule BigardoneDevWeb.Layouts do
         <div class="w-3/5 md:w-9/12">
           bigardone.dev &copy; {DateTime.utc_now().year}
         </div>
-        <div class="flex w-2/5 flex-row justify-end gap-x-10 md:w-2/12">
+        <div class="flex justify-end gap-x-4">
           <a class="block flex-1 text-right" href="https://github.com/bigardone" target="_blank">
             <img src={~p"/images/github.svg"} width="24" height="24" alt="GitHub" />
-          </a>
-          <a class="block flex-1 text-right" href="https://twitter.com/bigardone" target="_blank">
-            <img src={~p"/images/twitter.svg"} width="24" height="24" alt="Twitter" />
           </a>
           <a
             class="block flex-1 text-right"

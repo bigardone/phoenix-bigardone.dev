@@ -30,7 +30,7 @@ defmodule BigardoneDevWeb.PostLive do
     <Layouts.app flash={@flash} current_path={@current_path}>
       <section class="prose prose-purple mx-auto mt-16 max-w-none px-4 md:prose-lg md:mt-32 md:max-w-4xl">
         <header class="mb-10">
-          <h1 class="mb-4 font-black">{@post.title}</h1>
+          <h1 class="mb-4 font-bold">{@post.title}</h1>
           <div class="mb-4 text-xl text-gray-500">{@post.excerpt}</div>
           <.post_meta date={@post.date} reading_time={@post.reading_time} tags={@post.tags} />
         </header>
