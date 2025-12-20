@@ -37,10 +37,139 @@
   @apply text-purple-700 hover:text-purple-900;
 }
 
-.prose-purple code {
+/* Inline code (not in pre blocks) */
+.prose-purple :not(pre) > code {
   @apply rounded bg-gray-100 px-1 py-0.5;
 }
 
 .prose-purple pre {
-  @apply bg-gray-900;
+  @apply rounded-lg overflow-x-auto;
+}
+
+/* Makeup syntax highlighting styles (Catppuccin Macchiato theme) */
+.makeup {
+  color: #cad3f5; /* Text */
+  background-color: #24273a; /* Base */
+}
+.makeup .hll { background-color: #363a4f; } /* Surface 0 */
+.makeup .unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Comments - Overlay 1 (muted) */
+.makeup .c,
+.makeup .c1,
+.makeup .ch,
+.makeup .cm,
+.makeup .cp,
+.makeup .cpf,
+.makeup .cs { color: #8087a2; font-style: italic; }
+
+/* Keywords - Mauve (purple) */
+.makeup .k,
+.makeup .kc,
+.makeup .kd,
+.makeup .kp,
+.makeup .kr,
+.makeup .kt { color: #c6a0f6; }
+
+/* Keyword namespace/use/alias - Mauve */
+.makeup .kn { color: #c6a0f6; }
+
+/* Strings - Green */
+.makeup .s,
+.makeup .s1,
+.makeup .s2,
+.makeup .sa,
+.makeup .sb,
+.makeup .sc,
+.makeup .sd,
+.makeup .sh,
+.makeup .si,
+.makeup .sr,
+.makeup .ss,
+.makeup .sx,
+.makeup .dl { color: #a6da95; }
+
+/* String escape - Pink */
+.makeup .se { color: #f5bde6; }
+
+/* Numbers - Peach */
+.makeup .m,
+.makeup .mb,
+.makeup .mf,
+.makeup .mh,
+.makeup .mi,
+.makeup .mo,
+.makeup .il,
+.makeup .l,
+.makeup .ld { color: #f5a97f; }
+
+/* Names - Text */
+.makeup .n,
+.makeup .nb,
+.makeup .ni,
+.makeup .nl,
+.makeup .nn,
+.makeup .nv,
+.makeup .py,
+.makeup .bp { color: #cad3f5; }
+
+/* Module/Class names - Yellow */
+.makeup .nc { color: #eed49f; }
+
+/* Function names - Blue */
+.makeup .nf,
+.makeup .fm,
+.makeup .nx { color: #8aadf4; }
+
+/* Function decorator/attribute - Yellow */
+.makeup .na,
+.makeup .nd,
+.makeup .ne { color: #eed49f; }
+
+/* Constants/Atoms - Teal */
+.makeup .no { color: #8bd5ca; }
+
+/* Tags (HTML) - Mauve */
+.makeup .nt { color: #c6a0f6; }
+
+/* Operators - Sky */
+.makeup .o,
+.makeup .ow { color: #91d7e3; }
+
+/* Punctuation - Overlay 2 */
+.makeup .p { color: #939ab7; }
+
+/* Error - Red */
+.makeup .err { color: #ed8796; background-color: #363a4f; }
+
+/* Generic styles */
+.makeup .gd { color: #ed8796; } /* Red - deleted */
+.makeup .ge { font-style: italic; }
+.makeup .gi { color: #a6da95; } /* Green - inserted */
+.makeup .gs { font-weight: bold; }
+.makeup .gu { color: #8087a2; } /* Overlay 1 - subheading */
+
+/* Variable types - Flamingo */
+.makeup .vc,
+.makeup .vg,
+.makeup .vi,
+.makeup .vm { color: #f0c6c6; }
+
+/* Whitespace */
+.makeup .w { color: #cad3f5; }
+
+/* Non-highlighted code blocks (Catppuccin Macchiato theme) */
+/* Covers: diff, plaintext, bash, sh, console, css, html, json, ruby, sql, etc. */
+pre > code:not(.makeup) {
+  color: #cad3f5; /* Text */
+  background-color: #24273a; /* Base */
+  display: block;
+  white-space: pre;
 }
