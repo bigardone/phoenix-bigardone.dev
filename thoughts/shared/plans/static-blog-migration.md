@@ -975,32 +975,32 @@ rm priv/posts/2024-01-01-test-post.md
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Project compiles with all posts: `mix compile`
-- [ ] No parsing errors in compilation output
-- [ ] Verify post count via IEx: `iex -S mix -e "IO.puts(length(BigardoneDev.Blog.all_posts()))"`
+- [x] Project compiles with all posts: `mix compile`
+- [x] No parsing errors in compilation output
+- [x] Verify post count via IEx: `iex -S mix -e "IO.puts(length(BigardoneDev.Blog.all_posts()))"` (102 posts)
 
 #### Visual Verification (Playwright MCP):
 
 **Homepage with real content:**
-- [ ] Navigate to `http://localhost:4000` using `browser_navigate`
-- [ ] Take `browser_snapshot` to capture homepage with real articles
-- [ ] Verify 6 real post cards: `browser_evaluate` with `() => document.querySelectorAll('article').length >= 6`
-- [ ] Verify posts have real titles (not "Test Post"): `browser_evaluate` with `() => !document.body.textContent.includes("Test Post")`
+- [x] Navigate to `http://localhost:4000` using `browser_navigate`
+- [x] Take `browser_snapshot` to capture homepage with real articles
+- [x] Verify 6 real post cards: `browser_evaluate` with `() => document.querySelectorAll('article').length >= 6`
+- [x] Verify posts have real titles (not "Test Post"): `browser_evaluate` with `() => !document.body.textContent.includes("Test Post")`
 
 **Blog listing with all posts:**
-- [ ] Navigate to `http://localhost:4000/blog` using `browser_navigate`
-- [ ] Take `browser_snapshot` to capture full blog listing
-- [ ] Verify many post cards: `browser_evaluate` with `() => document.querySelectorAll('article').length > 50`
+- [x] Navigate to `http://localhost:4000/blog` using `browser_navigate`
+- [x] Take `browser_snapshot` to capture full blog listing
+- [x] Verify many post cards: `browser_evaluate` with `() => document.querySelectorAll('article').length > 50`
 
 **Post with images and code:**
-- [ ] Navigate to a known post URL (e.g., a recent Elixir tutorial)
-- [ ] Take `browser_snapshot` to capture post
-- [ ] Verify images render: `browser_evaluate` with `() => document.querySelectorAll('article img').length > 0` (for posts with images)
-- [ ] Verify syntax highlighting: `browser_evaluate` with `() => document.querySelectorAll('pre code').length > 0`
-- [ ] Take `browser_take_screenshot` to save visual proof of syntax highlighting
+- [x] Navigate to a known post URL (e.g., a recent Elixir tutorial)
+- [x] Take `browser_snapshot` to capture post
+- [x] Verify images render: `browser_evaluate` with `() => document.querySelectorAll('article img').length > 0` (for posts with images)
+- [x] Verify syntax highlighting: `browser_evaluate` with `() => document.querySelectorAll('pre code').length > 0`
+- [x] Take `browser_take_screenshot` to save visual proof of syntax highlighting
 
 **URL pattern verification:**
-- [ ] Click on several posts from the blog listing and verify URLs match `/blog/YYYY/MM/DD/slug` pattern via `browser_snapshot` showing the URL or via network requests
+- [x] Click on several posts from the blog listing and verify URLs match `/blog/YYYY/MM/DD/slug` pattern via `browser_snapshot` showing the URL or via network requests
 
 ---
 
