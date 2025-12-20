@@ -68,13 +68,13 @@ defmodule BigardoneDevWeb.HomeLive do
               class="grid grid-flow-row grid-cols-1 gap-8 md:grid-cols-2"
             >
               <.post_card :for={{dom_id, post} <- @streams.latest_posts} id={dom_id} post={post} />
-              <div>
-                <a
-                  href="/blog"
+              <div id="view-more-articles">
+                <.link
+                  navigate="/blog"
                   class="shadow-custom block rounded-lg bg-purple-200 p-8 text-center font-bold text-purple-900 hover:shadow-custom-hover hover:underline"
                 >
                   View more articles
-                </a>
+                </.link>
               </div>
             </div>
           </div>
