@@ -10,7 +10,7 @@ defmodule BigardoneDevWeb.BlogLive do
      socket
      |> assign(:page_title, "Articles")
      |> assign(:current_path, "/blog")
-     |> assign(:posts, Blog.all_posts())}
+     |> stream(:posts, Blog.all_posts())}
   end
 
   @impl true
@@ -19,8 +19,12 @@ defmodule BigardoneDevWeb.BlogLive do
     <Layouts.app flash={@flash} current_path={@current_path}>
       <section class="mx-auto max-w-6xl px-4 py-12 md:py-32">
         <.section_heading text="Articles" />
-        <div class="grid grid-flow-row grid-cols-1 gap-8 md:grid-cols-2">
-          <.post_card :for={post <- @posts} post={post} />
+        <div
+          id="posts"
+          phx-update="stream"
+          class="grid grid-flow-row grid-cols-1 gap-8 md:grid-cols-2"
+        >
+          <.post_card :for={{dom_id, post} <- @streams.posts} id={dom_id} post={post} />
         </div>
       </section>
     </Layouts.app>

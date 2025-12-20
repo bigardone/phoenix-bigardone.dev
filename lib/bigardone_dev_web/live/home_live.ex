@@ -11,8 +11,9 @@ defmodule BigardoneDevWeb.HomeLive do
      socket
      |> assign(:page_title, "Home")
      |> assign(:current_path, "/")
-     |> assign(:latest_posts, Blog.last_posts(6))
-     |> assign(:projects, Projects.all())}
+     |> stream(:latest_posts, Blog.last_posts(6))
+     |> stream_configure(:projects, dom_id: &"project-#{&1.name |> String.downcase() |> String.replace(~r/\s+/, "-")}")
+     |> stream(:projects, Projects.all())}
   end
 
   @impl true
@@ -61,8 +62,12 @@ defmodule BigardoneDevWeb.HomeLive do
         <section class="bg-purple-50" id="latest_articles">
           <div class="mx-auto max-w-6xl px-4">
             <.section_heading text="Latest articles" />
-            <div class="grid grid-flow-row grid-cols-1 gap-8 md:grid-cols-2">
-              <.post_card :for={post <- @latest_posts} post={post} />
+            <div
+              id="latest-posts"
+              phx-update="stream"
+              class="grid grid-flow-row grid-cols-1 gap-8 md:grid-cols-2"
+            >
+              <.post_card :for={{dom_id, post} <- @streams.latest_posts} id={dom_id} post={post} />
               <div>
                 <a
                   href="/blog"
@@ -81,8 +86,16 @@ defmodule BigardoneDevWeb.HomeLive do
         <%!-- Projects Section --%>
         <section class="mx-auto max-w-6xl px-4" id="recent_projects">
           <.section_heading text="Recent projects" />
-          <div class="grid grid-flow-row grid-cols-1 gap-8 md:grid-cols-3">
-            <.project_card :for={project <- @projects} project={project} />
+          <div
+            id="projects"
+            phx-update="stream"
+            class="grid grid-flow-row grid-cols-1 gap-8 md:grid-cols-3"
+          >
+            <.project_card
+              :for={{dom_id, project} <- @streams.projects}
+              id={dom_id}
+              project={project}
+            />
           </div>
         </section>
       </div>

@@ -14,11 +14,15 @@ defmodule BigardoneDevWeb.BlogComponents do
     """
   end
 
+  attr :id, :string, default: nil
   attr :post, :map, required: true
 
   def post_card(assigns) do
     ~H"""
-    <article class="shadow-custom cursor-pointer rounded-lg bg-white p-8 transition-shadow duration-300 hover:shadow-custom-hover">
+    <article
+      id={@id}
+      class="shadow-custom cursor-pointer rounded-lg bg-white p-8 transition-shadow duration-300 hover:shadow-custom-hover"
+    >
       <.link navigate={@post.path}>
         <header class="mb-5">
           <h2 class="mb-6 text-xl font-black hover:text-purple-900 hover:underline">
@@ -58,11 +62,15 @@ defmodule BigardoneDevWeb.BlogComponents do
     """
   end
 
+  attr :id, :string, default: nil
   attr :project, :map, required: true
 
   def project_card(assigns) do
     ~H"""
-    <article class="shadow-custom relative rounded-lg border border-gray-100 bg-white transition-shadow duration-300 hover:shadow-custom-hover">
+    <article
+      id={@id}
+      class="shadow-custom relative rounded-lg border border-gray-100 bg-white transition-shadow duration-300 hover:shadow-custom-hover"
+    >
       <div class="relative h-44 overflow-hidden rounded-t-lg bg-purple-400">
         <img
           src={@project.image}
