@@ -1,18 +1,46 @@
-# BigardoneDev
+# bigardone.dev
 
-To start your Phoenix server:
+My personal website and blog built with Phoenix 1.8, LiveView, and Tailwind CSS v4.
 
-* Run `mix setup` to install and setup dependencies
-* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Features
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+- **Blog** - Articles about Elixir, Phoenix, LiveView, and web development
+- **Projects** - Showcase of recent open source projects
+- **Markdown-based content** - Blog posts powered by NimblePublisher with syntax highlighting
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Tech Stack
 
-## Learn more
+- [Elixir](https://elixir-lang.org/) & [Phoenix](https://www.phoenixframework.org/) 1.8
+- [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view)
+- [Tailwind CSS](https://tailwindcss.com/) v4
+- [NimblePublisher](https://hexdocs.pm/nimble_publisher) for static blog content
+- [Makeup](https://hexdocs.pm/makeup) for code syntax highlighting
 
-* Official website: https://www.phoenixframework.org/
-* Guides: https://hexdocs.pm/phoenix/overview.html
-* Docs: https://hexdocs.pm/phoenix
-* Forum: https://elixirforum.com/c/phoenix-forum
-* Source: https://github.com/phoenixframework/phoenix
+## Development
+
+```bash
+# First-time setup
+mix setup
+
+# Start the development server
+mix phx.server
+
+# Or start with IEx shell
+iex -S mix phx.server
+```
+
+Visit [localhost:4000](http://localhost:4000) in your browser.
+
+## Testing
+
+```bash
+# Run all tests
+mix test
+
+# Run pre-commit checks (compile, format, test)
+mix precommit
+```
+
+## License
+
+MIT
