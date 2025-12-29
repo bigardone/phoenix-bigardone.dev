@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Project Overview
+
+Personal blog and portfolio site for bigardone.dev, built with Phoenix 1.8, LiveView, and Tailwind CSS v4. Uses NimblePublisher for compile-time markdown blog posts.
+
 ## Build and Development Commands
 
 ```bash
@@ -19,27 +23,71 @@ mix test --failed            # Run only previously failed tests
 
 # Pre-commit (run before committing)
 mix precommit                # Compile (warnings as errors) + check deps + format + test
+
+# Blog
+mix post                     # Interactive task to create a new blog post
 ```
 
 ## Architecture Overview
 
-This is a Phoenix 1.8 application with LiveView and Tailwind CSS v4.
-
 ### Module Structure
 
-- **BigardoneDev** (`lib/bigardone_dev/`) - Domain/business logic (currently minimal)
+- **BigardoneDev** (`lib/bigardone_dev/`) - Domain/business logic
+  - `blog.ex` - Blog context using NimblePublisher (compile-time posts)
+  - `blog/post.ex` - Post struct with YAML frontmatter parsing
+  - `blog/yaml_parser.ex` - Custom parser for post frontmatter
+  - `projects.ex` - Static project data for portfolio section
 - **BigardoneDevWeb** (`lib/bigardone_dev_web/`) - Web layer
   - `router.ex` - Routes and pipelines
   - `endpoint.ex` - HTTP endpoint configuration
   - `components/core_components.ex` - Reusable UI components (`<.button>`, `<.input>`, `<.icon>`, `<.flash>`, `<.table>`)
+  - `components/blog_components.ex` - Blog-specific components
   - `components/layouts.ex` - App layouts (`root`, `app`)
-  - `controllers/` - HTTP controllers
+  - `live/` - LiveView modules
+
+### Routes
+
+| Path | LiveView | Description |
+|------|----------|-------------|
+| `/` | `HomeLive` | Homepage with recent posts and projects |
+| `/blog` | `BlogLive` | Blog listing page |
+| `/blog/:year/:month/:day/:slug` | `PostLive` | Individual post view |
+
+### Blog System
+
+Posts are markdown files in `priv/posts/` with YAML frontmatter, compiled at build time via NimblePublisher.
+
+**Post filename format:** `YYYY-MM-DD-slug.md`
+
+**Frontmatter fields:**
+- `title` (required) - Post title
+- `excerpt` - Short description
+- `tags` - Comma-separated or list of tags
+- `image` - Optional cover image
+
+**Example:**
+```markdown
+---
+title: My Post Title
+excerpt: A short description
+tags: elixir, phoenix, liveview
+---
+
+Post content in markdown...
+```
+
+**Key functions in `BigardoneDev.Blog`:**
+- `all_posts/0` - All posts sorted by date descending
+- `last_posts/1` - Most recent N posts (default 6)
+- `get_post_by_path/1` - Find post by URL path
+- `all_tags/0` - All unique tags
 
 ### Key Conventions
 
 - Use `BigardoneDevWeb, :controller|:live_view|:html` macros from `bigardone_dev_web.ex`
 - Layouts module is pre-aliased; use `<Layouts.app flash={@flash}>` directly
-- Verified routes use `~p` sigil (e.g., `~p"/users"`)
+- Verified routes use `~p` sigil (e.g., `~p"/blog"`)
+- Posts require recompilation to appear (touch `lib/bigardone_dev/blog.ex` or restart server)
 
 ### Asset Pipeline
 
